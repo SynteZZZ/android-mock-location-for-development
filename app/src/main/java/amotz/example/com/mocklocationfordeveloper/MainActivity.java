@@ -7,14 +7,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
-import android.provider.Settings;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -48,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         if (!isMockSettingsON()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("In order to use this app you must enable mock location do you want to enable it now?").setTitle("Mock location is not enable");
+            builder.setMessage("In order to use this app you must enable mock location do you want to enable it now?").setTitle("Mock location is not enabled");
             builder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     Intent i = new Intent(android.provider.Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS);
@@ -187,8 +185,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         if (location.getLatitude() == dummyLat && location.getLongitude() == dummylong) {
             Toast.makeText(this,"Mock location application is working",Toast.LENGTH_SHORT).show();
         }else {
-            Toast.makeText(this,String.format(Locale.US,"setting mock to Latitude=%f, Longitude=%f Altitude=%f Accuracy=%f",
-                    location.getLatitude(), location.getLongitude(), location.getAltitude(), location.getAccuracy()),Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, String.format(Locale.US, "setting %s mock to Latitude=%f, Longitude=%f Altitude=%f Accuracy=%f Recency=%d",
+                    location.getProvider(), location.getLatitude(), location.getLongitude(), location.getAltitude(), location.getAccuracy(), location.getElapsedRealtimeNanos()), Toast.LENGTH_SHORT).show();
         }
     }
 }
